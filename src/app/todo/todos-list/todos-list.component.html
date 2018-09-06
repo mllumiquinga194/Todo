@@ -1,5 +1,5 @@
 <ul class="todo-list">
   <!-- para clonar X cantidad de tareas que tengo -->
   <!-- [todo] es el input que tengo en todo-item y "todo" es de cada iteracion de mi lista de todos (*ngFor="let todo of todos") -->
-  <app-todo-item [todo]="todo" *ngFor="let todo of todos"></app-todo-item>
+  <app-todo-item [todo]="todo" *ngFor="let todo of todos | filterTodo: filtro"></app-todo-item><!-- filterTodo: filtro llamo a mi filtro donde filtro por pendientes, completados y todos-->
 </ul>

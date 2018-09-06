@@ -59,6 +59,14 @@ export function todoReducer(state = estadoInicial, action: fromTodo.Acciones): T
         case fromTodo.BORRAR_TODO:
         //el filter me regresa un nuevo arreglo con la condicion de que no estara el todo con id igual al action.id
             return state.filter( todoEdit => todoEdit.id !== action.id );
+
+        case fromTodo.TOGGLEALL_TODO:
+            return state.map( todoCompleto => {
+                return {
+                    ...todoCompleto,
+                    completado: action.completado
+                };
+            });
         default:
             return state;
     }
