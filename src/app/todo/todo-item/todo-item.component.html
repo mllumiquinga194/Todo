@@ -4,9 +4,14 @@
     <div class="view">
       <input class="toggle" type="checkbox" [formControl]="chkField" [checked]="todo.completado">
       <label (dblclick)="editar()">{{todo.texto}}</label>
-      <button class="destroy"></button>
+      <button (click)="borrarTodo()" class="destroy"></button>
     </div>
     <!-- #txtInputFisico es una referencia local
     blur es cuando pierde el foco. lo usaremos para indicar que dejo de editar -->
-    <input class="edit" [value]="todo.texto" [formControl]="txtInput" (blur)="terminarEdicion()" #txtInputFisico>
+    <input class="edit"
+          [value]="todo.texto" 
+          [formControl]="txtInput" 
+          (blur)="terminarEdicion()"
+          (keydown.enter)="$event.target.blur();false" 
+          #txtInputFisico>
   </li>

@@ -42,6 +42,23 @@ export function todoReducer(state = estadoInicial, action: fromTodo.Acciones): T
                     return todoEdit;//no puedo mutar la informacion anterior porque nsino no va a ser posible regresar a estados anteriores.
                 }
             });
+        
+        case fromTodo.EDITAR_TODO:
+            return state.map(todoEdit => { //el operador map barre todo el arreglo
+
+                if (todoEdit.id === action.id) {
+                    return {
+                        ...todoEdit,
+                        texto: action.texto
+                    };
+                } else {
+                    return todoEdit;
+                }
+            });
+
+        case fromTodo.BORRAR_TODO:
+        //el filter me regresa un nuevo arreglo con la condicion de que no estara el todo con id igual al action.id
+            return state.filter( todoEdit => todoEdit.id !== action.id );
         default:
             return state;
     }
