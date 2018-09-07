@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 //si deseo puedo importar las acciones del filtro
 import * as fromFiltro from '../../filter/filter.actions';
+import * as fromTodo from '../todo.actions'
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.reducers';
 
@@ -31,6 +32,12 @@ export class TodoFooterComponent implements OnInit {
 
     const accion = new fromFiltro.SetFiltroAction(nuevoFiltro);
     this.store.dispatch(accion);
+  }
+
+  borrarTodo(){
+
+    const accion = new fromTodo.BorrarAllTodoAction();
+    this.store.dispatch( accion );
   }
 
 }
