@@ -5,6 +5,7 @@ import * as fromFiltro from '../../filter/filter.actions';
 import * as fromTodo from '../todo.actions'
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.reducers';
+import { Todo } from '../model/todo.model';
 
 @Component({
   selector: 'app-todo-footer',
@@ -13,10 +14,12 @@ import { AppState } from '../../app.reducers';
 })
 export class TodoFooterComponent implements OnInit {
 
+  pendientes: number;
+
   //filtros validos aceptados
   filtrosValidos: fromFiltro.filtrosValidos[] = ['todos','completados','pendientes'];
 
-  //para indicar cual filtrio esta selecciondo
+  //para indicar cual filtro esta selecciondo
   filtroActual: fromFiltro.filtrosValidos;
 
   constructor( private store: Store<AppState>) { }
@@ -24,7 +27,8 @@ export class TodoFooterComponent implements OnInit {
   ngOnInit() {
 
     this.store.subscribe( state => {
-      this.filtroActual = state.filtro;//obtengo el filtro actual seleccionado
+      this.filtroActual = state.filtro; //obtengo el filtro actual seleccionado
+      this.contarPendientes( state.todos );//para contar los pendientes
     });
   }
 
@@ -34,8 +38,11 @@ export class TodoFooterComponent implements OnInit {
     this.store.dispatch(accion);
   }
 
-  borrarTodo(){
+  contarPendientes(todos:Todo[]){//para contar las tareas no completadas o pendientes.
+    this.pendientes = todos.filter( todo => !todo.completado).length;//sin el length me devuelve un arregle nuevo de todos pero con el length me devuelve el numero de todosque no estan completados
+  }
 
+  borrarTodo(){
     const accion = new fromTodo.BorrarAllTodoAction();
     this.store.dispatch( accion );
   }
